@@ -3,21 +3,63 @@
 import { useState, FormEvent } from 'react';
 import Image from 'next/image';
 
+type Status = 'idle' | 'loading' | 'success' | 'error';
+
 export default function Home() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      console.log('Email submitted:', email);
-      setStatus('success');
-      setEmail('');
-    }
-  };
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   const scrollToForm = () => {
     document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const trimmed = email.trim().toLowerCase();
+    const isValid = trimmed && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+    if (!isValid) {
+      setStatus('error');
+      setErrorMsg('Enter a valid email.');
+      return;
+    }
+
+    try {
+      setStatus('loading');
+      setErrorMsg('');
+
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmed, source: 'landing-page' }),
+      });
+
+      const payload = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setStatus('error');
+        setErrorMsg(payload?.error || 'Something failed. Try again.');
+        return;
+      }
+
+      // If Google script returned ok:false inside its payload, treat as error
+      const googleOk =
+        payload?.google?.ok === undefined ? true : Boolean(payload?.google?.ok);
+
+      if (!googleOk) {
+        setStatus('error');
+        setErrorMsg(payload?.google?.error || 'Could not add you to the list. Try again.');
+        return;
+      }
+
+      setStatus('success');
+      setEmail('');
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+      setErrorMsg('Network error. Try again.');
+    }
   };
 
   return (
@@ -86,7 +128,7 @@ export default function Home() {
       <section className="relative px-6 py-16 max-w-4xl mx-auto">
         <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mb-6" />
         <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-5">
-          You don't have a self-control problem.
+          You don&apos;t have a self-control problem.
         </h2>
         <p className="text-xl md:text-3xl text-neutral-300 leading-relaxed mb-5">
           You have a dopamine system optimized for noise.
@@ -175,7 +217,7 @@ export default function Home() {
             </div>
           </div>
           <p className="text-lg text-neutral-400 mt-10 text-center">
-            Your attention earns value before it's spent.
+            Your attention earns value before it&apos;s spent.
           </p>
         </div>
       </section>
@@ -213,38 +255,50 @@ export default function Home() {
         <div className="max-w-2xl mx-auto text-center">
           <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-8" />
           <p className="text-xl md:text-2xl text-neutral-300 mb-4">
-            We're opening early access to a limited group.
+            We&apos;re opening early access to a limited group.
           </p>
           <p className="text-lg text-neutral-400 mb-10">
             Join the waitlist to start neuroscrolling — and turn everyday scrolling into real mental progress.
           </p>
-          
+
           {status === 'success' ? (
             <div className="p-6 bg-neutral-900/50 backdrop-blur-sm rounded-2xl border border-cyan-500/30">
               <p className="text-xl text-neutral-200">
-                You're on the list. Check your inbox soon.
+                You&apos;re on the list. Check your inbox soon.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 mb-5">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                className="flex-1 px-6 py-4 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/50 rounded-full text-white placeholder-neutral-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 transition-all"
-              />
-              <button
-                type="submit"
-                className="relative px-8 py-4 bg-white text-black font-semibold rounded-full transition-all hover:scale-105 whitespace-nowrap group overflow-hidden"
-              >
-                <span className="relative z-10">Get Early Access</span>
-                <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
-              </button>
-            </form>
+            <>
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 mb-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  disabled={status === 'loading'}
+                  className="flex-1 px-6 py-4 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/50 rounded-full text-white placeholder-neutral-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 transition-all disabled:opacity-60"
+                />
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="relative px-8 py-4 bg-white text-black font-semibold rounded-full transition-all hover:scale-105 whitespace-nowrap group overflow-hidden disabled:opacity-70 disabled:hover:scale-100"
+                >
+                  <span className="relative z-10">
+                    {status === 'loading' ? 'Adding…' : 'Get Early Access'}
+                  </span>
+                  <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
+                </button>
+              </form>
+
+              {status === 'error' && (
+                <p className="text-sm text-red-400 mb-2">
+                  {errorMsg || 'Something went wrong.'}
+                </p>
+              )}
+            </>
           )}
-          
+
           <p className="text-sm text-neutral-500">
             No spam. No ads. Just the app.
           </p>
