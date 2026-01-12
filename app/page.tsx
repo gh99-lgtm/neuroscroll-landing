@@ -1,65 +1,262 @@
-import Image from "next/image";
+'use client';
+
+import { useState, FormEvent } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      console.log('Email submitted:', email);
+      setStatus('success');
+      setEmail('');
+    }
+  };
+
+  const scrollToForm = () => {
+    document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-gradient-to-b from-black via-neutral-950 to-black text-white relative overflow-hidden">
+      {/* Gradient Orbs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/12 rounded-full blur-3xl opacity-50" />
+      <div className="absolute top-1/3 right-1/3 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl opacity-50" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/12 rounded-full blur-3xl opacity-50" />
+
+      {/* Sticky Navigation */}
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-black/60 border-b border-neutral-800/50">
+        <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/images/neuroscroll-clean-logo.png"
+              alt="NeuroScroll"
+              width={46}
+              height={46}
+              className="w-[46px] h-[46px]"
+            />
+            <span className="font-bold text-lg">NeuroScroll</span>
+          </div>
+          <button
+            onClick={scrollToForm}
+            className="px-6 py-2 bg-white text-black font-semibold text-sm rounded-full hover:bg-neutral-200 transition-all hover:shadow-lg hover:shadow-cyan-500/20"
+          >
+            Get Early Access
+          </button>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="relative flex flex-col items-center justify-center min-h-[85vh] px-6 text-center pt-12">
+        <div className="mb-8 opacity-95">
+          <Image
+            src="/images/neuroscroll-clean-logo.png"
+            alt="NeuroScroll"
+            width={144}
+            height={144}
+            className="w-36 h-36"
+          />
+        </div>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-600 bg-clip-text text-transparent">
+          NeuroScroll
+        </h1>
+        <p className="text-2xl md:text-4xl font-medium text-neutral-300 mb-6">
+          Learn Before You Scroll
+        </p>
+        <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-2">
+          Turn scrolling into micro-learning and real-world knowledge.
+        </p>
+        <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-10">
+          NeuroScroll powers your brain with high-signal micro-learning moments before you open Instagram, TikTok, or YouTube.
+        </p>
+        <button
+          onClick={scrollToForm}
+          className="relative px-8 py-4 bg-white text-black font-semibold text-lg rounded-full transition-all hover:scale-105 group overflow-hidden"
+        >
+          <span className="relative z-10">Get Early Access</span>
+          <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
+        </button>
+        <p className="text-sm text-neutral-500 mt-5">Launching this week.</p>
+      </section>
+
+      {/* Problem */}
+      <section className="relative px-6 py-16 max-w-4xl mx-auto">
+        <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mb-6" />
+        <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-5">
+          You don't have a self-control problem.
+        </h2>
+        <p className="text-xl md:text-3xl text-neutral-300 leading-relaxed mb-5">
+          You have a dopamine system optimized for noise.
+        </p>
+        <p className="text-xl md:text-3xl text-neutral-300 leading-relaxed">
+          NeuroScroll redirects that dopamine toward real-world knowledge — through micro-learning.
+        </p>
+      </section>
+
+      {/* Outcome */}
+      <section className="relative px-6 py-16 max-w-4xl mx-auto">
+        <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mb-6" />
+        <h2 className="text-3xl md:text-4xl font-bold mb-10">
+          What Neuroscrolling gives you
+        </h2>
+        <ul className="space-y-5 text-lg md:text-xl mb-8">
+          <li className="flex items-start gap-4">
+            <span className="text-cyan-400/60 flex-shrink-0 font-bold">•</span>
+            <span className="text-neutral-300">Sharper thinking throughout the day</span>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="text-sky-400/60 flex-shrink-0 font-bold">•</span>
+            <span className="text-neutral-300">Real-world knowledge you can actually use</span>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="text-blue-400/60 flex-shrink-0 font-bold">•</span>
+            <span className="text-neutral-300">Less mental fog, more clarity</span>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="text-cyan-500/60 flex-shrink-0 font-bold">•</span>
+            <span className="text-neutral-300">A sense that your time online is no longer wasted</span>
+          </li>
+        </ul>
+        <p className="text-lg text-neutral-400">
+          This compounds daily.
+        </p>
+      </section>
+
+      {/* Neuroscrolling Definition */}
+      <section className="relative px-6 py-16 max-w-4xl mx-auto">
+        <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mb-6" />
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          What is Neuroscrolling
+        </h2>
+        <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed mb-5">
+          Neuroscrolling is the habit of adding intelligence to your scroll time through micro-learning.
+        </p>
+        <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed mb-6">
+          Instead of leaving an app drained, you leave with something learned, something usable, or something clearer.
+        </p>
+        <p className="text-lg text-neutral-400">
+          Same apps. Different outcome.
+        </p>
+      </section>
+
+      {/* How it works */}
+      <section className="relative px-6 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-6" />
+            <h2 className="text-3xl md:text-4xl font-bold">
+              How it works
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="relative p-8 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/50 rounded-2xl overflow-hidden group hover:border-cyan-500/40 transition-all">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-sky-500 opacity-60" />
+              <span className="text-5xl font-bold bg-gradient-to-br from-cyan-400 to-blue-500 bg-clip-text text-transparent block mb-4">1</span>
+              <p className="text-lg text-neutral-300">
+                Open a social app
+              </p>
+            </div>
+            <div className="relative p-8 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/50 rounded-2xl overflow-hidden group hover:border-sky-500/40 transition-all">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-sky-400 to-blue-500 opacity-60" />
+              <span className="text-5xl font-bold bg-gradient-to-br from-sky-400 to-blue-500 bg-clip-text text-transparent block mb-4">2</span>
+              <p className="text-lg text-neutral-300">
+                Learn something real (micro-learning)
+              </p>
+            </div>
+            <div className="relative p-8 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/50 rounded-2xl overflow-hidden group hover:border-blue-500/40 transition-all">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-blue-600 opacity-60" />
+              <span className="text-5xl font-bold bg-gradient-to-br from-blue-400 to-blue-600 bg-clip-text text-transparent block mb-4">3</span>
+              <p className="text-lg text-neutral-300">
+                Scroll unlocked
+              </p>
+            </div>
+          </div>
+          <p className="text-lg text-neutral-400 mt-10 text-center">
+            Your attention earns value before it's spent.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Differentiation */}
+      <section className="relative px-6 py-16 max-w-4xl mx-auto">
+        <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mb-6" />
+        <h2 className="text-3xl md:text-5xl font-bold mb-4">
+          Other apps block you.
+        </h2>
+        <p className="text-3xl md:text-5xl font-bold text-neutral-300 mb-14">
+          NeuroScroll sharpens you.
+        </p>
+        <ul className="space-y-5 text-lg md:text-xl mb-8">
+          <li className="flex items-start gap-4">
+            <span className="text-cyan-400/60 flex-shrink-0 font-bold">•</span>
+            <span className="text-neutral-300">Real-world topics (AI, Business, Influence)</span>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="text-sky-400/60 flex-shrink-0 font-bold">•</span>
+            <span className="text-neutral-300">Short lessons — not courses</span>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="text-blue-400/60 flex-shrink-0 font-bold">•</span>
+            <span className="text-neutral-300">Knowledge over restriction</span>
+          </li>
+        </ul>
+        <p className="text-lg text-neutral-400">
+          Scrolling becomes intentional.
+        </p>
+      </section>
+
+      {/* Early Access */}
+      <section id="early-access" className="relative px-6 py-16">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="w-16 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-8" />
+          <p className="text-xl md:text-2xl text-neutral-300 mb-4">
+            We're opening early access to a limited group.
+          </p>
+          <p className="text-lg text-neutral-400 mb-10">
+            Join the waitlist to start neuroscrolling — and turn everyday scrolling into real mental progress.
+          </p>
+          
+          {status === 'success' ? (
+            <div className="p-6 bg-neutral-900/50 backdrop-blur-sm rounded-2xl border border-cyan-500/30">
+              <p className="text-xl text-neutral-200">
+                You're on the list. Check your inbox soon.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 mb-5">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="flex-1 px-6 py-4 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/50 rounded-full text-white placeholder-neutral-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 transition-all"
+              />
+              <button
+                type="submit"
+                className="relative px-8 py-4 bg-white text-black font-semibold rounded-full transition-all hover:scale-105 whitespace-nowrap group overflow-hidden"
+              >
+                <span className="relative z-10">Get Early Access</span>
+                <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
+              </button>
+            </form>
+          )}
+          
+          <p className="text-sm text-neutral-500">
+            No spam. No ads. Just the app.
+          </p>
         </div>
-      </main>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative px-6 py-14 text-center border-t border-neutral-800/50">
+        <p className="text-neutral-500">
+          Built for people who hate wasting attention.
+        </p>
+      </footer>
     </div>
   );
 }
