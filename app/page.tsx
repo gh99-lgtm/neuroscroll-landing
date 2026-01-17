@@ -86,7 +86,7 @@ export default function Home() {
             onClick={scrollToForm}
             className="px-6 py-2 bg-white text-black font-semibold text-sm rounded-full hover:bg-neutral-200 transition-all hover:shadow-lg hover:shadow-cyan-500/20"
           >
-            Get Early Access
+            Get Free Early Access Now!
           </button>
         </div>
       </nav>
@@ -103,13 +103,13 @@ export default function Home() {
           />
         </div>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-600 bg-clip-text text-transparent">
-          NeuroScroll
+          Your brain isn't addicted to strolling.
         </h1>
         <p className="text-2xl md:text-4xl font-medium text-neutral-300 mb-6">
-          Learn Before You Scroll
+          It's starving for something better.
         </p>
         <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-2">
-          Turn scrolling into micro-learning and real-world knowledge.
+          Turn the time you already scroll into knowledge you can actually use.
         </p>
         <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-10">
           NeuroScroll powers your brain with high-signal micro-learning moments before you open Instagram, TikTok, or YouTube.
@@ -118,7 +118,7 @@ export default function Home() {
           onClick={scrollToForm}
           className="relative px-8 py-4 bg-white text-black font-semibold text-lg rounded-full transition-all hover:scale-105 group overflow-hidden"
         >
-          <span className="relative z-10">Get Early Access</span>
+          <span className="relative z-10">Get Free Early Access Now!</span>
           <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
         </button>
         <p className="text-sm text-neutral-500 mt-5">Launching this week.</p>
@@ -285,7 +285,7 @@ export default function Home() {
                   className="relative px-8 py-4 bg-white text-black font-semibold rounded-full transition-all hover:scale-105 whitespace-nowrap group overflow-hidden disabled:opacity-70 disabled:hover:scale-100"
                 >
                   <span className="relative z-10">
-                    {status === 'loading' ? 'Adding…' : 'Get Early Access'}
+                    {status === 'loading' ? 'Adding…' : 'Get Free Early Access Now!'}
                   </span>
                   <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
                 </button>
