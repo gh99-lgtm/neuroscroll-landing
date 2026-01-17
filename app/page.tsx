@@ -103,16 +103,13 @@ export default function Home() {
           />
         </div>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-600 bg-clip-text text-transparent">
-          Your brain isn't addicted to strolling.
+          Your brain isn't addicted to scrolling.
         </h1>
         <p className="text-2xl md:text-4xl font-medium text-neutral-300 mb-6">
           It's starving for something better.
         </p>
         <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-2">
-          Turn the time you already scroll into knowledge you can actually use.
-        </p>
-        <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-10">
-          NeuroScroll powers your brain with high-signal micro-learning moments before you open Instagram, TikTok, or YouTube.
+          Turn the time you already scroll into knowledge you can actually use. NeuroScroll is an app that powers your brain with micro-learning moments before you open Instagram, TikTok, or YouTube.
         </p>
         <button
           onClick={scrollToForm}
