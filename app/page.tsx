@@ -85,9 +85,10 @@ export default function Home() {
           </div>
           <button
             onClick={scrollToForm}
-            className="px-6 py-2 bg-white text-black font-semibold text-sm rounded-full hover:bg-neutral-200 transition-all hover:shadow-lg hover:shadow-cyan-500/20"
+            className="px-3 sm:px-6 py-1.5 sm:py-2 bg-white text-black font-semibold text-xs sm:text-sm rounded-full hover:bg-neutral-200 transition-all hover:shadow-lg hover:shadow-cyan-500/20"
           >
-            Get Free Early Access Now!
+            <span className="sm:hidden">Early Access</span>
+            <span className="hidden sm:inline">Get Free Early Access Now!</span>
           </button>
         </div>
       </nav>
