@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import Image from 'next/image';
+import HeroParticles from '@/components/HeroParticles';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
@@ -93,7 +94,13 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative flex flex-col items-center justify-center min-h-[85vh] px-6 text-center pt-12">
-        <div className="mb-8 opacity-95">
+        {/* Particles background layer */}
+        <HeroParticles />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+
+        {/* Hero content */}
+        <div className="relative z-10 mb-8 opacity-95">
           <Image
             src="/images/neuroscroll-clean-logo.png"
             alt="NeuroScroll"
@@ -102,23 +109,23 @@ export default function Home() {
             className="w-36 h-36"
           />
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-600 bg-clip-text text-transparent">
+        <h1 className="relative z-10 text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-600 bg-clip-text text-transparent">
           Your brain isn't addicted to scrolling.
         </h1>
-        <p className="text-2xl md:text-4xl font-medium text-neutral-300 mb-6">
+        <p className="relative z-10 text-2xl md:text-4xl font-medium text-neutral-300 mb-6">
           It's starving for something better.
         </p>
-        <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-2">
+        <p className="relative z-10 text-lg md:text-xl text-neutral-400 max-w-2xl mb-2">
           NeuroScroll is an app that uses micro-learning to turn the time you use scrolling to power your brain with knowledge you can actually use.
         </p>
         <button
           onClick={scrollToForm}
-          className="relative px-8 py-4 bg-white text-black font-semibold text-lg rounded-full transition-all hover:scale-105 group overflow-hidden"
+          className="relative z-10 px-8 py-4 bg-white text-black font-semibold text-lg rounded-full transition-all hover:scale-105 group overflow-hidden"
         >
           <span className="relative z-10">Get Free Early Access Now!</span>
           <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
         </button>
-        <p className="text-sm text-neutral-500 mt-5">No Ads. No Spam. Just the App.</p>
+        <p className="relative z-10 text-sm text-neutral-500 mt-5">No Ads. No Spam. Just the App.</p>
       </section>
 
       {/* Problem */}
