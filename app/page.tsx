@@ -109,7 +109,7 @@ export default function Home() {
           It's starving for something better.
         </p>
         <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mb-2">
-          Turn the time you already scroll into knowledge you can actually use. NeuroScroll is an app that powers your brain with micro-learning moments before you open Instagram, TikTok, or YouTube.
+          NeuroScroll is an app that uses micro-learning to turn the time you use scrolling to power your brain with knowledge you can actually use.
         </p>
         <button
           onClick={scrollToForm}
@@ -118,7 +118,7 @@ export default function Home() {
           <span className="relative z-10">Get Free Early Access Now!</span>
           <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400/30 via-sky-400/30 to-blue-500/30 blur-xl" />
         </button>
-        <p className="text-sm text-neutral-500 mt-5">Launching this week.</p>
+        <p className="text-sm text-neutral-500 mt-5">No Ads. No Spam. Just the App.</p>
       </section>
 
       {/* Problem */}
