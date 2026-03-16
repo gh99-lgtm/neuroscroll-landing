@@ -315,6 +315,15 @@ export default function Home() {
         <p className="text-neutral-500">
           Built for people who hate wasting attention.
         </p>
+        <div className="mt-6 space-y-1 text-sm text-neutral-600">
+          <p>NeuroScroll is a product of Spaceluxx LLC</p>
+          <p>© 2026 Spaceluxx LLC. All rights reserved.</p>
+          <p>
+            <a href="mailto:hello@neuroscroll.io" className="hover:text-neutral-400 transition-colors">
+              hello@neuroscroll.io
+            </a>
+          </p>
+        </div>
       </footer>
     </div>
   );
