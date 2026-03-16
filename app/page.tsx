@@ -324,6 +324,11 @@ export default function Home() {
             </a>
           </p>
         </div>
+        <div className="mt-4 flex justify-center gap-5 text-xs text-neutral-700">
+          <a href="/privacy" className="hover:text-neutral-400 transition-colors">Privacy Policy</a>
+          <a href="/support" className="hover:text-neutral-400 transition-colors">Support</a>
+          <a href="/terms" className="hover:text-neutral-400 transition-colors">Terms</a>
+        </div>
       </footer>
     </div>
   );
